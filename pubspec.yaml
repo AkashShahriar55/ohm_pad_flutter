@@ -84,6 +84,13 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/audios/
+    - assets/images/
+  fonts:
+    - family: AssetAudioPlayer
+      fonts:
+        - asset: fonts/AssetAudioPlayer.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -118,4 +125,6 @@ flutter:
 
 dependency_overrides:
   file: ^7.0.0
+  assets_audio_player: ^3.0.0
+  assets_audio_player_web: ^3.0.0
 

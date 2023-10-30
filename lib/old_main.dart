@@ -1,5 +1,5 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:assets_audio_player_example/asset_audio_player_icons.dart';
+import 'package:ohm_pad_flutter/asset_audio_player_icons.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());

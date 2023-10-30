@@ -144,32 +144,30 @@ class RecorderExampleState extends State<RecorderExample> {
           appDocDirectory = await getExternalStorageDirectory();
         }
 
-        if (appDocDirectory != null) {
-          // can add extension like '.mp4' '.wav' '.m4a' '.aac'
-          customPath = appDocDirectory.path +
-              customPath +
-              DateTime.now().millisecondsSinceEpoch.toString();
+        // can add extension like '.mp4' '.wav' '.m4a' '.aac'
+        customPath = appDocDirectory!.path +
+            customPath +
+            DateTime.now().millisecondsSinceEpoch.toString();
 
-          // .wav <---> AudioFormat.WAV
-          // .mp4 .m4a .aac <---> AudioFormat.AAC
-          // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
-          _recorder =
-              FlutterAudioRecorder(customPath, audioFormat: AudioFormat.WAV);
+        // .wav <---> AudioFormat.WAV
+        // .mp4 .m4a .aac <---> AudioFormat.AAC
+        // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
+        _recorder =
+            FlutterAudioRecorder(customPath, audioFormat: AudioFormat.WAV);
 
-          await _recorder.initialized;
-          // after initialization
-          var current = await _recorder.current(channel: 0);
-          print(current);
-          // should be 'Initialized', if all working fine
-          setState(() {
-            _current = current;
-            if (current?.status != null) {
-              _currentStatus = current!.status!;
-            }
-            print(_currentStatus);
-          });
-        }
-      } else {
+        await _recorder.initialized;
+        // after initialization
+        var current = await _recorder.current(channel: 0);
+        print(current);
+        // should be 'Initialized', if all working fine
+        setState(() {
+          _current = current;
+          if (current?.status != null) {
+            _currentStatus = current!.status!;
+          }
+          print(_currentStatus);
+        });
+            } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('You must accept permissions')));
       }

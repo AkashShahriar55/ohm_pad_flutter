@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:assets_audio_player_example/player/PlaySpeedSelector.dart';
+import 'package:ohm_pad_flutter/player/PlaySpeedSelector.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'player/ForwardRewindSelector.dart';
