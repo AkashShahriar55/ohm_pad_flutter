@@ -1,9 +1,9 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:ohm_pad_flutter/player/PlayingControlsSmall.dart';
+import 'package:ohm_pad_flutter/player/playing_controls_small.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'player/PositionSeekWidget.dart';
-import 'player/model/MyAudio.dart';
+import 'player/position_seek_widget.dart';
+import 'player/model/my_audio.dart';
 
 void main() => runApp(
       NeumorphicTheme(

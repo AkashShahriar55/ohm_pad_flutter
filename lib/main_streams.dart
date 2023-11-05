@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:ohm_pad_flutter/player/PlaySpeedSelector.dart';
+import 'package:ohm_pad_flutter/player/play_speed_selector.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'player/ForwardRewindSelector.dart';
-import 'player/PlayingControls.dart';
-import 'player/PositionSeekWidget.dart';
-import 'player/SongsSelector.dart';
-import 'player/VolumeSelector.dart';
+import 'player/forward_rewind_selector.dart';
+import 'player/playing_controls.dart';
+import 'player/position_seek_widget.dart';
+import 'player/songs_selector.dart';
+import 'player/volume_selector.dart';
 
 void main() => runApp(
       NeumorphicTheme(

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'player/PlayingControls.dart';
-import 'player/PositionSeekWidget.dart';
-import 'player/SongsSelector.dart';
+import 'player/playing_controls.dart';
+import 'player/position_seek_widget.dart';
+import 'player/songs_selector.dart';
 
 void main() => runApp(
       NeumorphicTheme(
