@@ -26,13 +26,14 @@ class LandingController extends BaseController {
   @override
   void disposeController() {
     ohmPlayerController.disposeController();
+    songList.dispose();
     super.disposeController();
   }
 
   void _getSongsFromAsset() async {
     _songRepository.getSongFromAsset().then((List<SongModel> value) {
       songList.value = value;
-      ohmPlayerController.setSong(songList.value.first);
+      ohmPlayerController.setSongMetaData(songList.value.first);
     });
   }
 }

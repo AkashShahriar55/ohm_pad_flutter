@@ -29,6 +29,12 @@ class PlayerControls extends StatelessWidget {
               onChanged: (double val) {
                 ohmPlayerController.playerProgress.value = val;
               },
+              onChangeStart: (double val) {
+                ohmPlayerController.pausePlayer();
+              },
+              onChangeEnd: (double val) {
+                ohmPlayerController.seek(val);
+              },
               activeColor: Colors.white,
               inactiveColor: AppColor.lightGrey.withOpacity(0.6),
               thumbColor: Colors.white,
@@ -58,15 +64,15 @@ class PlayerControls extends StatelessWidget {
               ),
             ),
             SizedBox(width: AppValues.dimen_32.w),
-            ValueListenableBuilder<PlayerState>(
+            ValueListenableBuilder<OhmPlayerState>(
               valueListenable: ohmPlayerController.playerState,
-              builder: (BuildContext context, PlayerState state, _) {
+              builder: (BuildContext context, OhmPlayerState state, _) {
                 return GestureDetector(
                   onTap: () {
                     ohmPlayerController.playPause();
                   },
                   child: AssetImageView(
-                    fileName: state == PlayerState.paused
+                    fileName: state == OhmPlayerState.paused
                         ? AppAssets.icPlay
                         : AppAssets.icPause,
                     height: AppValues.dimen_24.h,
