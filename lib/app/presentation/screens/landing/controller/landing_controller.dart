@@ -16,10 +16,10 @@ class LandingController extends BaseController {
 
   @override
   void onInit() {
-    ohmPlayerController = OhmPlayerController();
     _songRepository = SongRepositoryImpl();
-
+    ohmPlayerController = OhmPlayerController();
     _getSongsFromAsset();
+
     super.onInit();
   }
 
@@ -32,6 +32,7 @@ class LandingController extends BaseController {
   void _getSongsFromAsset() async {
     _songRepository.getSongFromAsset().then((List<SongModel> value) {
       songList.value = value;
+      ohmPlayerController.setSong(songList.value.first);
     });
   }
 }

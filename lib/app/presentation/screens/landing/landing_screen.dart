@@ -74,7 +74,7 @@ class _SplashScreenState extends AppState<LandingScreen> {
                       return SongListView(
                         songList: value,
                         onTapSongItem: (SongModel model) {
-                          Log.debug("Tapped");
+                          _controller.ohmPlayerController.setSong(model);
                         },
                       );
                     }),

@@ -7,43 +7,43 @@ class SongDataSourceImpl extends SongDataSource {
     return <SongModel>[
       const SongModel(
         songName: "Country",
-        songAssetPath: "assets/audios/country.mp3",
+        songAssetPath: "audios/country.mp3",
       ),
       const SongModel(
         songName: "Country 2",
-        songAssetPath: "assets/audios/country_2.mp3",
+        songAssetPath: "audios/country_2.mp3",
       ),
       const SongModel(
         songName: "Electronic",
-        songAssetPath: "assets/audios/electronic.mp3",
+        songAssetPath: "audios/electronic.mp3",
       ),
       const SongModel(
         songName: "Hip Hop",
-        songAssetPath: "assets/audios/hiphop.mp3",
+        songAssetPath: "audios/hiphop.mp3",
       ),
       const SongModel(
         songName: "Horn",
-        songAssetPath: "assets/audios/horn.mp3",
+        songAssetPath: "audios/horn.mp3",
       ),
       const SongModel(
         songName: "Instrumental",
-        songAssetPath: "assets/audios/instrumental.mp3",
+        songAssetPath: "audios/instrumental.mp3",
       ),
       const SongModel(
         songName: "Pop Test",
-        songAssetPath: "assets/audios/pop_test.mp3",
+        songAssetPath: "audios/pop_test.mp3",
       ),
       const SongModel(
         songName: "Rock",
-        songAssetPath: "assets/audios/rock.mp3",
+        songAssetPath: "audios/rock.mp3",
       ),
       const SongModel(
         songName: "Small Song",
-        songAssetPath: "assets/audios/small_song.mp3",
+        songAssetPath: "audios/small_song.mp3",
       ),
       const SongModel(
         songName: "Water",
-        songAssetPath: "assets/audios/water.mp3",
+        songAssetPath: "audios/water.mp3",
       ),
     ];
   }
