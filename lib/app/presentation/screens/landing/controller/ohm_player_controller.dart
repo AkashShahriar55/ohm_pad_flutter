@@ -12,6 +12,8 @@ class OhmPlayerController extends Controller {
   );
 
   final ValueNotifier<SongModel?> currentSong = ValueNotifier<SongModel?>(null);
+
+
   
   
   @override
@@ -24,6 +26,11 @@ class OhmPlayerController extends Controller {
   
   void _initializeListeners(){
     currentSong.addListener(onCurrentSongChange);
+    player.onDurationChanged.listen(onDurationChanged);
+  }
+
+  void onDurationChanged(Duration d){
+      
   }
 
   void _removeListeners(){

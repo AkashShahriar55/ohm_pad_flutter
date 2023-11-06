@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>A50FDE79-BFEF-4546-886B-2991111BED65</title>
+    <defs>
+        <path d="M7.295,0.705 C6.9055372,1.0944628 6.90525458,1.72581956 7.29436856,2.11563087 L12.17,7 L12.17,7 L1,7 C0.44771525,7 -6.76353751e-17,7.44771525 0,8 C6.76353751e-17,8.55228475 0.44771525,9 1,9 L12.17,9 L12.17,9 L7.29436856,13.8843691 C6.90525458,14.2741804 6.9055372,14.9055372 7.295,15.295 C7.68436075,15.6843607 8.31563925,15.6843607 8.705,15.295 L15.2928932,8.70710678 C15.6834175,8.31658249 15.6834175,7.68341751 15.2928932,7.29289322 L8.705,0.705 C8.31563925,0.315639251 7.68436075,0.315639251 7.295,0.705 Z" id="path-1"></path>
+    </defs>
+    <g id="UI-Mobile-RS-+-Fell---v2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Start-Trygg-Båt---Endre-navn" transform="translate(-24.000000, -54.000000)">
+            <g id="Elements/Icon-Bullet" transform="translate(20.000000, 50.000000)">
+                <g id="⭐️-Icon" transform="translate(4.000000, 4.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1" transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) "></use>
+                    </mask>
+                    <use id="Mask" fill="#000000" transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) " xlink:href="#path-1"></use>
+                    <g id="🎨-Color" mask="url(#mask-2)" fill="#012169">
+                        <g transform="translate(-4.000000, -4.000000)" id="Rectangle">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

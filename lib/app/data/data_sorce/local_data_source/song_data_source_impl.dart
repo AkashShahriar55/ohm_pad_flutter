@@ -6,20 +6,20 @@ class SongDataSourceImpl extends SongDataSource {
   Future<List<SongModel>> getSongFromAsset() async {
     return <SongModel>[
       const SongModel(
-        songName: "Country",
-        songAssetPath: "audios/country.mp3",
+        songName: "Guided intro",
+        songAssetPath: "audios/guided_Intro.mp3",
       ),
       const SongModel(
-        songName: "Country 2",
-        songAssetPath: "audios/country_2.mp3",
+        songName: "Beta Rejuvenate",
+        songAssetPath: "audios/beta_rejuvenate_741_hz.mp3",
       ),
       const SongModel(
-        songName: "Electronic",
-        songAssetPath: "audios/electronic.mp3",
+        songName: "Delta Sleep",
+        songAssetPath: "audios/delta_sleep_432hz.mp3",
       ),
       const SongModel(
-        songName: "Hip Hop",
-        songAssetPath: "audios/hiphop.mp3",
+        songName: "Theta Relaxation",
+        songAssetPath: "audios/theta_relaxation_528_hz.mp3",
       ),
       const SongModel(
         songName: "Horn",
