@@ -27,10 +27,20 @@ class OhmPlayerController extends Controller {
   void _initializeListeners(){
     currentSong.addListener(onCurrentSongChange);
     player.onDurationChanged.listen(onDurationChanged);
+    player.onPositionChanged.listen(onPositionChanged);
+    // player.onPlayerStateChanged.listen(onPlayerStateChange);
   }
 
   void onDurationChanged(Duration d){
-      
+      // this is the duration of the music
+  }
+
+  void onPositionChanged(Duration  p){
+    // this is the playing position of the music
+  }
+
+  void onPlayerStateChange(PlayerState s){
+    // this is the player state Pause, Stopped, Playing
   }
 
   void _removeListeners(){
