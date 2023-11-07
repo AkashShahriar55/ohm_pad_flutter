@@ -11,7 +11,7 @@ abstract class _Path {
   static const String settings = '/settings';
 }
 
-final appRouter = GoRouter(
+final GoRouter appRouter = GoRouter(
   initialLocation: _Path.splash,
   // observers: [
   //   GoRouterObserver(GoRouterBindings()),
@@ -31,19 +31,6 @@ final appRouter = GoRouter(
         return const LandingScreen();
       },
     ),
-    // GoRoute(
-    //   path: _Path.details,
-    //   name: AppRoutes.details,
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const DetailsScreen();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: _Path.settings,
-    //   name: AppRoutes.settings,
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const SettingsScreen();
-    //   },
-    // ),
+
   ],
 );

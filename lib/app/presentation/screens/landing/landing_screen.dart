@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohm_pad_flutter/app/core/base/app_state.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_color.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_values.dart';
-import 'package:ohm_pad_flutter/app/core/utils/log.dart';
 import 'package:ohm_pad_flutter/app/data/model/response/song_model.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/controller/landing_controller.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/bluetooth_device_bottom_sheet.dart';
@@ -15,10 +14,10 @@ class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
   @override
-  State<LandingScreen> createState() => _SplashScreenState();
+  State<LandingScreen> createState() => _LandingScreenState();
 }
 
-class _SplashScreenState extends AppState<LandingScreen> {
+class _LandingScreenState extends AppState<LandingScreen> {
   late final LandingController _controller;
 
   @override

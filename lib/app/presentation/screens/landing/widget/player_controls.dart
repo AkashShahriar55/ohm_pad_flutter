@@ -30,7 +30,7 @@ class PlayerControls extends StatelessWidget {
                 ohmPlayerController.playerProgress.value = val;
               },
               onChangeStart: (double val) {
-                ohmPlayerController.pausePlayer();
+                ohmPlayerController.startSeeking();
               },
               onChangeEnd: (double val) {
                 ohmPlayerController.seek(val);
