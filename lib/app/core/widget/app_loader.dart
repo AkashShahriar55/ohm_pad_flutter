@@ -18,7 +18,6 @@ class AppLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Lottie.asset(
       _getLoaderFileName,
-      package: 'fell',
       width: width ?? AppValues.dimen_192.w,
       height: height,
       fit: fit,
