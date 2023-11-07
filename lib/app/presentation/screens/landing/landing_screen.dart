@@ -29,6 +29,7 @@ class _SplashScreenState extends AppState<LandingScreen> {
 
   @override
   void dispose() {
+    _controller.disposeController();
     super.dispose();
   }
 
@@ -74,7 +75,7 @@ class _SplashScreenState extends AppState<LandingScreen> {
                       return SongListView(
                         songList: value,
                         onTapSongItem: (SongModel model) {
-                          _controller.ohmPlayerController.setSong(model);
+                          _controller.ohmPlayerController.setAndPlay(model);
                         },
                       );
                     }),
