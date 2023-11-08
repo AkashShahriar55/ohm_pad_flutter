@@ -90,11 +90,11 @@ class _LandingScreenState extends AppState<LandingScreen> {
     );
   }
 
-  void _onTapConnectedDevice(OhmBluetoothController controller) async {
+  void _onTapConnectedDevice() async {
 
     showMyBottomSheet(
       backgroundColor: Colors.transparent,
-      child: BluetoothDeviceBottomSheet(ohmBluetoothController: controller)
+      child: BluetoothDeviceBottomSheet(ohmBluetoothController: _controller.ohmBluetoothController)
     );
   }
 }

@@ -1,9 +1,12 @@
 
 
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/base/controller.dart';
 import '../ui_model/device_ui_model.dart';
@@ -20,7 +23,9 @@ class OhmBluetoothController extends Controller{
   final ValueNotifier<List<DeviceUiModel>> devices = ValueNotifier<List<DeviceUiModel>>([]);
 
 
-  final FlutterReactiveBle ble = FlutterReactiveBle();
+  final FlutterReactiveBle _ble = FlutterReactiveBle();
+
+
 
 
 
@@ -28,12 +33,58 @@ class OhmBluetoothController extends Controller{
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    scanForDevices();
+
+    _statusListener();
+    _scanForDevices();
   }
 
-  void scanForDevices(){
-    ble.scanForDevices(withServices: <Uuid>[], scanMode: ScanMode.lowLatency).listen((DiscoveredDevice event) {
-      discoveredDevices[event.id] = event;
+  void _scanForDevices() async {
+    var status = await Permission.location.status;
+    debugPrint("${status.isDenied}");
+    if (status.isDenied) {
+
+      // We didn't ask for permission yet or the permission has been denied before, but not permanently.
+      if (await Permission.locationWhenInUse.request().isGranted) {
+        // Either the permission was already granted before or the user just granted it.
+        _startScanning();
+
+      }else{
+        openAppSettings();
+      }
+
+    }else{
+      _startScanning();
+    }
+
+
+  }
+
+  void connectToDevice(DiscoveredDevice model) {
+    _ble.connectToDevice(
+      id: model.id,
+      connectionTimeout: const Duration(seconds: 2),
+    ).listen((connectionState) {
+      if(connectionState.connectionState == ConnectionStatus.connected){
+        connectedDevices.add(connectionState.deviceId);
+      }
+      debugPrint("$connectionState");
+      // Handle connection state updates
+    }, onError: (Object error) {
+      // Handle a possible error
+      debugPrint("$error");
+    });
+  }
+
+  connectedDeviceCount() {
+    return connectedDevices.length;
+  }
+
+  void _startScanning() {
+    _ble.scanForDevices(withServices: <Uuid>[], scanMode: ScanMode.balanced).listen((DiscoveredDevice event) {
+      debugPrint("$event");
+      if(event.connectable == Connectable.available){
+        discoveredDevices[event.id] = event;
+      }
       List<DeviceUiModel> newList = [];
       for(DiscoveredDevice device in discoveredDevices.values){
         var isConnected = connectedDevices.contains(device.id);
@@ -46,16 +97,17 @@ class OhmBluetoothController extends Controller{
       }
       devices.value = newList;
     });
-
   }
 
-  void connectToDevice(DiscoveredDevice model) {
-
+  void _statusListener() {
+    _ble.statusStream.listen((status) {
+      //code for handling status update
+      debugPrint("$status");
+    });
   }
 
-  connectedDeviceCount() {
-    return connectedDevices.length;
-  }
+
+
 
 
 

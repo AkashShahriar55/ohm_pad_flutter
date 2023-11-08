@@ -28,6 +28,7 @@ class DeviceListItem extends StatelessWidget {
         onTapDeviceItem?.call(model.deviceModel);
       },
       child: Stack(
+        alignment: Alignment.center,
         children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(
@@ -36,6 +37,7 @@ class DeviceListItem extends StatelessWidget {
             ),
             color: Colors.transparent,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 AssetImageView(
@@ -45,30 +47,44 @@ class DeviceListItem extends StatelessWidget {
                   color: Colors.white,
                 ),
                 SizedBox(width: AppValues.dimen_16.w),
-                Text(
-                  model.deviceModel.name,
-                  style: primaryRegular16.copyWith(color: Colors.white),
-                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.deviceModel.name,
+                      style: primaryRegular16.copyWith(color: Colors.white),
+                    ),
+                    Text(
+                      model.deviceModel.id,
+                      style: primaryRegular12.copyWith(color: Colors.grey),
+                    ),
+                  ],
+                )
                 // const Spacer(),
               ],
             ),
           ),
           if (model.isConnected)
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Disconnect",
-                style: primaryRegular16.copyWith(color: Colors.red),
-              ),
+            Positioned.fill(
+                child:  Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "Disconnect",
+                    style: primaryRegular16.copyWith(color: Colors.red),
+                  ),
+                ),
             ),
           if(!model.isConnected)
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Connect",
-                style: primaryRegular16.copyWith(color: Colors.green),
-              ),
-            ),
+            Positioned.fill(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "Connect",
+                    style: primaryRegular16.copyWith(color: Colors.green),
+                  ),
+                ),
+            )
+
         ],
       ),
     );

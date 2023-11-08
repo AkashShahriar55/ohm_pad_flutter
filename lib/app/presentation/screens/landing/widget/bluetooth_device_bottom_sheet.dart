@@ -23,7 +23,6 @@ class BluetoothDeviceBottomSheet extends StatelessWidget {
       showCloseButton: false,
       childBuilder: (BuildContext context, ScrollController scrollController) {
         return Expanded(
-          flex: 8,
           child: ValueListenableBuilder<List<DeviceUiModel>>(
               valueListenable: ohmBluetoothController.devices,
               builder:
@@ -31,6 +30,7 @@ class BluetoothDeviceBottomSheet extends StatelessWidget {
                 return DeviceListView(
                   deviceList: value,
                   onTapDeviceItem: (DiscoveredDevice model) {
+
                     ohmBluetoothController.connectToDevice(model);
                   },
                 );

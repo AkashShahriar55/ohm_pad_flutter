@@ -7,7 +7,7 @@ import 'package:ohm_pad_flutter/app/core/constants/text_styles.dart';
 import '../controller/ohm_bluetooth_controller.dart';
 
 class ConnectedDevice extends StatelessWidget {
-  final Function(OhmBluetoothController controller) onTap;
+  final Function() onTap;
   final OhmBluetoothController ohmBluetoothController;
 
   const ConnectedDevice({
@@ -19,7 +19,7 @@ class ConnectedDevice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap(ohmBluetoothController),
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: AppValues.dimen_8.h,

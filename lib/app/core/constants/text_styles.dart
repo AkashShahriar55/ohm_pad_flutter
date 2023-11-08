@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_color.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_values.dart';
 
+
+
 final TextStyle primaryRegular16 = TextStyle(
   fontWeight: FontWeight.normal,
   fontSize: AppValues.dimen_16.sp,

@@ -54,6 +54,7 @@ dependencies:
   equatable: 2.0.5
   audioplayers: ^5.2.0
   flutter_reactive_ble: ^5.2.0
+  permission_handler: ^11.0.1
   #flutter_html: ^2.2.1
 
   # flutter_audio_recorder: ^0.5.5
