@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:ohm_pad_flutter/app/core/base/controller.dart';
-import 'package:ohm_pad_flutter/app/core/utils/log.dart';
 import 'package:ohm_pad_flutter/app/data/model/response/song_model.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/ui_model/song_meta_data.dart';
 
@@ -23,8 +22,19 @@ class OhmPlayerController extends Controller {
   late final StreamSubscription<Duration> durationListener;
   late final StreamSubscription<Duration> positionListener;
 
+  bool _isSeeking = false;
+
+  void startSeeking() {
+    _isSeeking = true;
+  }
+
+  void _stopSeeking() {
+    _isSeeking = false;
+  }
+
   @override
   void onInit() {
+    _isSeeking = false;
     _initializeListeners();
     super.onInit();
   }
@@ -37,13 +47,11 @@ class OhmPlayerController extends Controller {
   }
 
   void _onComplete(void event) async {
-    Log.debug("complete_debug:");
     _stopPlayer();
   }
 
   void _onDurationChanged(Duration d) {
     // this is the duration of the music
-    Log.debug("duration_debug: $d");
     currentSong.value = currentSong.value?.copyWith(
       duration: d,
     );
@@ -51,7 +59,9 @@ class OhmPlayerController extends Controller {
 
   void _onPositionChanged(Duration p) {
     // this is the playing position of the music
-    Log.debug("position_debug: $p");
+    if (_isSeeking) {
+      return;
+    }
     currentSong.value = currentSong.value?.copyWith(
       seekDuration: p,
     );
@@ -77,15 +87,15 @@ class OhmPlayerController extends Controller {
       _resumePlayer();
     } else {
       //pause the music
-      pausePlayer();
+      await pausePlayer();
     }
   }
 
-  void pausePlayer() async {
+  Future<void> pausePlayer() async {
     if (player.state == PlayerState.playing) {
       await player.pause();
-      playerState.value = OhmPlayerState.paused;
     }
+    playerState.value = OhmPlayerState.paused;
   }
 
   void _resumePlayer() async {
@@ -101,6 +111,8 @@ class OhmPlayerController extends Controller {
   void disposeController() {
     playerProgress.dispose();
     playerState.dispose();
+    player.stop();
+    player.release();
     _removeListeners();
     player.dispose();
     super.disposeController();
@@ -111,19 +123,19 @@ class OhmPlayerController extends Controller {
     _setSource();
   }
 
-  void setAndPlay(SongModel model) {
-    _stopPlayer();
+  void setAndPlay(SongModel model) async {
+    await _stopPlayer();
     _updateSongMetaData(model);
     _play();
   }
 
-  void seek(double progress) {
+  void seek(double progress) async {
     Duration seekDuration = _calculateSeekDuration(
       currentSong.value?.duration ?? const Duration(),
       progress,
     );
-    player.seek(seekDuration);
-    _resumePlayer();
+    await player.seek(seekDuration);
+    _stopSeeking();
   }
 
   void _updateSongMetaData(SongModel model) {
@@ -148,8 +160,8 @@ class OhmPlayerController extends Controller {
     }
   }
 
-  void _stopPlayer() async {
-    pausePlayer();
+  Future<void> _stopPlayer() async {
+    await pausePlayer();
     await player.stop();
     // await player.release();
     playerProgress.value = 0.0;

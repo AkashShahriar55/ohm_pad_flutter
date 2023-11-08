@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     _controller = SplashController();
     _controller.delay(onFinished: () {
-      context.goNamed(AppRoutes.landing);
+      context.pushReplacementNamed(AppRoutes.landing);
     });
     super.initState();
   }

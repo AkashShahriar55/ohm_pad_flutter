@@ -10,4 +10,5 @@ abstract class AppAssets {
   static const String icRepeat = 'ic_repeat.svg';
   static const String icShuffle = 'ic_shuffle.svg';
   static const String icEqualizer = 'ic_equalizer.svg';
+  static const String musicAnimation = 'assets/animations/music.json';
 }

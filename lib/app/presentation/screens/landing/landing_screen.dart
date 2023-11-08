@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohm_pad_flutter/app/core/base/app_state.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_color.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_values.dart';
-import 'package:ohm_pad_flutter/app/core/utils/log.dart';
 import 'package:ohm_pad_flutter/app/data/model/response/song_model.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/controller/landing_controller.dart';
+import 'package:ohm_pad_flutter/app/presentation/screens/landing/ui_model/song_ui_model.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/bluetooth_device_bottom_sheet.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/connected_device.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/ohm_player.dart';
@@ -15,10 +15,10 @@ class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
   @override
-  State<LandingScreen> createState() => _SplashScreenState();
+  State<LandingScreen> createState() => _LandingScreenState();
 }
 
-class _SplashScreenState extends AppState<LandingScreen> {
+class _LandingScreenState extends AppState<LandingScreen> {
   late final LandingController _controller;
 
   @override
@@ -69,13 +69,14 @@ class _SplashScreenState extends AppState<LandingScreen> {
               ),
               Expanded(
                 flex: 8,
-                child: ValueListenableBuilder<List<SongModel>>(
+                child: ValueListenableBuilder<List<SongUiModel>>(
                     valueListenable: _controller.songList,
-                    builder: (BuildContext context, List<SongModel> value, _) {
+                    builder:
+                        (BuildContext context, List<SongUiModel> value, _) {
                       return SongListView(
                         songList: value,
                         onTapSongItem: (SongModel model) {
-                          _controller.ohmPlayerController.setAndPlay(model);
+                          _controller.setAndPlay(model);
                         },
                       );
                     }),
