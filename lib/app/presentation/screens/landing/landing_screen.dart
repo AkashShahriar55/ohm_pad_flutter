@@ -5,6 +5,7 @@ import 'package:ohm_pad_flutter/app/core/constants/app_color.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_values.dart';
 import 'package:ohm_pad_flutter/app/data/model/response/song_model.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/controller/landing_controller.dart';
+import 'package:ohm_pad_flutter/app/presentation/screens/landing/controller/ohm_bluetooth_controller.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/ui_model/song_ui_model.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/bluetooth_device_bottom_sheet.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/connected_device.dart';
@@ -57,6 +58,7 @@ class _LandingScreenState extends AppState<LandingScreen> {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     ConnectedDevice(
+                      ohmBluetoothController: _controller.ohmBluetoothController,
                       onTap: _onTapConnectedDevice,
                     ),
                     Expanded(
@@ -88,10 +90,11 @@ class _LandingScreenState extends AppState<LandingScreen> {
     );
   }
 
-  void _onTapConnectedDevice() async {
+  void _onTapConnectedDevice(OhmBluetoothController controller) async {
+
     showMyBottomSheet(
       backgroundColor: Colors.transparent,
-      child: const BluetoothDeviceBottomSheet(),
+      child: BluetoothDeviceBottomSheet(ohmBluetoothController: controller)
     );
   }
 }

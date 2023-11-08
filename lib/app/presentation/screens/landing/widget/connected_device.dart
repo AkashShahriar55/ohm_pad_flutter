@@ -4,18 +4,22 @@ import 'package:ohm_pad_flutter/app/core/constants/app_color.dart';
 import 'package:ohm_pad_flutter/app/core/constants/app_values.dart';
 import 'package:ohm_pad_flutter/app/core/constants/text_styles.dart';
 
+import '../controller/ohm_bluetooth_controller.dart';
+
 class ConnectedDevice extends StatelessWidget {
-  final Function()? onTap;
+  final Function(OhmBluetoothController controller) onTap;
+  final OhmBluetoothController ohmBluetoothController;
 
   const ConnectedDevice({
-    this.onTap,
+    required this.ohmBluetoothController,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap(ohmBluetoothController),
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: AppValues.dimen_8.h,
@@ -32,7 +36,7 @@ class ConnectedDevice extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              "OnePlus Bullet Z2",
+              "${ohmBluetoothController.connectedDeviceCount()} devices",
               style: primaryRegular14.copyWith(color: Colors.white),
             ),
             SizedBox(width: AppValues.dimen_12.w),
