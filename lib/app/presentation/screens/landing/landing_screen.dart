@@ -91,10 +91,11 @@ class _LandingScreenState extends AppState<LandingScreen> {
   }
 
   void _onTapConnectedDevice() async {
-
+    _controller.ohmBluetoothController.startScan();
     showMyBottomSheet(
       backgroundColor: Colors.transparent,
       child: BluetoothDeviceBottomSheet(ohmBluetoothController: _controller.ohmBluetoothController)
-    );
+    ).whenComplete(() =>  _controller.ohmBluetoothController.stopScan());
+
   }
 }

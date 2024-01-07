@@ -1,13 +1,13 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:ohm_pad_flutter/app/presentation/screens/landing/ui_model/device_ui_model.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:ohm_pad_flutter/app/presentation/screens/landing/ui_model/bluetooth_device.dart';
 import 'package:ohm_pad_flutter/app/presentation/screens/landing/widget/device_list_item.dart';
 
 class DeviceListView extends StatelessWidget {
-  final List<DeviceUiModel> deviceList;
-  final Function(DiscoveredDevice model)? onTapDeviceItem;
+  final List<BluetoothDevice> deviceList;
+  final Function(BluetoothDevice model)? onTapDeviceItem;
 
   const DeviceListView({
     required this.deviceList,
@@ -23,7 +23,7 @@ class DeviceListView extends StatelessWidget {
       primary: true,
       itemBuilder: (BuildContext context, int index) {
         return DeviceListItem(
-          key: ValueKey<String>(deviceList[index].deviceModel.id),
+          key: ValueKey<String>(deviceList[index].remoteId.str),
           model: deviceList[index],
           onTapDeviceItem: onTapDeviceItem,
         );

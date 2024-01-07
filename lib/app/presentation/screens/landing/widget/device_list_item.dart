@@ -2,18 +2,19 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohm_pad_flutter/app/presentation/screens/landing/controller/ohm_bluetooth_controller.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_values.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../../../../core/widget/asset_image_view.dart';
-import '../ui_model/device_ui_model.dart';
+import '../ui_model/bluetooth_device.dart';
 
 class DeviceListItem extends StatelessWidget {
-  final DeviceUiModel model;
-  final Function(DiscoveredDevice model)? onTapDeviceItem;
+  final BluetoothDevice model;
+  final Function(BluetoothDevice model)? onTapDeviceItem;
 
   const DeviceListItem({
     required this.model,
@@ -25,7 +26,7 @@ class DeviceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onTapDeviceItem?.call(model.deviceModel);
+        onTapDeviceItem?.call(model);
       },
       child: Stack(
         alignment: Alignment.center,
@@ -51,11 +52,11 @@ class DeviceListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      model.deviceModel.name,
+                      model.platformName,
                       style: primaryRegular16.copyWith(color: Colors.white),
                     ),
                     Text(
-                      model.deviceModel.id,
+                      model.remoteId.str,
                       style: primaryRegular12.copyWith(color: Colors.grey),
                     ),
                   ],
@@ -65,25 +66,21 @@ class DeviceListItem extends StatelessWidget {
             ),
           ),
           if (model.isConnected)
-            Positioned.fill(
-                child:  Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Disconnect",
-                    style: primaryRegular16.copyWith(color: Colors.red),
-                  ),
-                ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Disconnect",
+                style: primaryRegular16.copyWith(color: Colors.red),
+              ),
             ),
           if(!model.isConnected)
-            Positioned.fill(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Connect",
-                    style: primaryRegular16.copyWith(color: Colors.green),
-                  ),
-                ),
-            )
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Connect",
+                style: primaryRegular16.copyWith(color: Colors.green),
+              ),
+            ),
 
         ],
       ),

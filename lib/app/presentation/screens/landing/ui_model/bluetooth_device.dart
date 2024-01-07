@@ -1,10 +1,10 @@
 
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class DeviceUiModel extends Equatable {
-  final DiscoveredDevice deviceModel;
+  final BluetoothDevice deviceModel;
   final bool isConnected;
 
   const DeviceUiModel({
@@ -13,7 +13,7 @@ class DeviceUiModel extends Equatable {
   });
 
   DeviceUiModel copyWith({
-    DiscoveredDevice? deviceModel,
+    BluetoothDevice? deviceModel,
     bool? isConnected,
   }) {
     return DeviceUiModel(

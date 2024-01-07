@@ -1,29 +1,31 @@
 
 
 
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/base/controller.dart';
-import '../ui_model/device_ui_model.dart';
+import '../ui_model/bluetooth_device.dart';
 
 class OhmBluetoothController extends Controller{
 
   final ValueNotifier<double> playerProgress = ValueNotifier<double>(0.0);
-  final List<Uuid> serviceList = <Uuid>[];
 
-  final Map<String,DiscoveredDevice> discoveredDevices = <String,DiscoveredDevice>{};
-
-  final Set<String> connectedDevices = <String>{};
-
-  final ValueNotifier<List<DeviceUiModel>> devices = ValueNotifier<List<DeviceUiModel>>([]);
+  final Map<String,BluetoothDevice> discoveredDevices = <String,BluetoothDevice>{};
+  final Map<String,bool> connectionMap = <String,bool>{};
 
 
-  final FlutterReactiveBle _ble = FlutterReactiveBle();
+  final ValueNotifier<List<BluetoothDevice>> devices = ValueNotifier<List<BluetoothDevice>>([]);
+
+
+  // Setup Listener for scan results.
+  late StreamSubscription<List<ScanResult>> subscription ;
 
 
 
@@ -34,80 +36,116 @@ class OhmBluetoothController extends Controller{
     // TODO: implement onInit
     super.onInit();
 
-    _statusListener();
-    _scanForDevices();
+    // if your terminal doesn't support color you'll see annoying logs like `\x1B[1;35m`
+    FlutterBluePlus.setLogLevel(LogLevel.verbose, color:true);
+
+    subscription = FlutterBluePlus.scanResults.listen((results) {
+      if (results.isNotEmpty) {
+        ScanResult r = results.last; // the most recently found device
+        discoveredDevices[r.device.remoteId.str] = r.device;
+        _refreshList();
+      }
+    });
+
+
   }
 
-  void _scanForDevices() async {
-    var status = await Permission.location.status;
-    debugPrint("${status.isDenied}");
-    if (status.isDenied) {
 
+  void _askPermission() async{
+    var status = await Permission.location.status;
+    if (status.isDenied) {
       // We didn't ask for permission yet or the permission has been denied before, but not permanently.
       if (await Permission.locationWhenInUse.request().isGranted) {
-        // Either the permission was already granted before or the user just granted it.
-        _startScanning();
+      // Either the permission was already granted before or the user just granted it.
 
       }else{
         openAppSettings();
       }
+    }
+  }
 
+  void connectToDevice(BluetoothDevice model) {
+    if(model.isConnected){
+      model.disconnect();
     }else{
-      _startScanning();
+      model.connect();
+    }
+    _refreshList();
+
+  }
+
+  connectedDeviceCount() {
+    return connectionMap.length;
+  }
+
+  void startScan() async{
+    var status = await Permission.location.status;
+    if(status.isDenied){
+      _askPermission();
+    }else{
+      // check if bluetooth is supported by your hardware
+      // Note: The platform is initialized on the first call to any FlutterBluePlus method.
+      if (await FlutterBluePlus.isSupported == false) {
+        print("Bluetooth not supported by this device");
+        return;
+      }
+
+      // handle bluetooth on & off
+      // note: for iOS the initial state is typically BluetoothAdapterState.unknown
+      // note: if you have permissions issues you will get stuck at BluetoothAdapterState.unauthorized
+      FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
+        print(state);
+        if (state == BluetoothAdapterState.on) {
+          // usually start scanning, connecting, etc
+          // Setup Listener for scan results.
+          FlutterBluePlus.startScan();
+
+        } else {
+          // show an error to the user, etc
+        }
+      });
+
+      // turn on bluetooth ourself if we can
+      // for iOS, the user controls bluetooth enable/disable
+      if (Platform.isAndroid) {
+        await FlutterBluePlus.turnOn();
+      }
     }
 
 
   }
 
-  void connectToDevice(DiscoveredDevice model) {
-    _ble.connectToDevice(
-      id: model.id,
-      connectionTimeout: const Duration(seconds: 2),
-    ).listen((connectionState) {
-      if(connectionState.connectionState == ConnectionStatus.connected){
-        connectedDevices.add(connectionState.deviceId);
-      }
-      debugPrint("$connectionState");
-      // Handle connection state updates
-    }, onError: (Object error) {
-      // Handle a possible error
-      debugPrint("$error");
-    });
-  }
-
-  connectedDeviceCount() {
-    return connectedDevices.length;
-  }
-
-  void _startScanning() {
-    _ble.scanForDevices(withServices: <Uuid>[], scanMode: ScanMode.balanced).listen((DiscoveredDevice event) {
-      debugPrint("$event");
-      if(event.connectable == Connectable.available){
-        discoveredDevices[event.id] = event;
-      }
-      List<DeviceUiModel> newList = [];
-      for(DiscoveredDevice device in discoveredDevices.values){
-        var isConnected = connectedDevices.contains(device.id);
-        var deviceUi = DeviceUiModel(
-            deviceModel: device,
-            isConnected: isConnected
-        );
-        newList.add(deviceUi);
-
-      }
-      devices.value = newList;
-    });
-  }
-
   void _statusListener() {
-    _ble.statusStream.listen((status) {
-      //code for handling status update
-      debugPrint("$status");
-    });
   }
 
 
 
+
+  void stopScan(){
+    FlutterBluePlus.stopScan();
+    discoveredDevices.clear();
+    devices.value.clear();
+  }
+
+
+
+
+
+  @override
+  void disposeController() {
+    // TODO: implement disposeController
+    subscription.cancel();
+    super.disposeController();
+
+  }
+
+  void _refreshList() {
+    var newList = <BluetoothDevice>[];
+    for(BluetoothDevice device in discoveredDevices.values){
+      newList.add(device);
+    }
+    devices.value = newList;
+  }
 
 
 
